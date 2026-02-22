@@ -84,9 +84,31 @@ const jobsData = [
 
 // dom element access ---------------------------------->
 const totalJobs = document.querySelectorAll('#total-jobs');
+const totalInterview = document.getElementById('total-interview');
+const totalRejected = document.getElementById('total-rejected');
 const jobContainer = document.getElementById('job-container');
 
+// empty array ----------------------------------------->
+let interviewJobData = [];
+let rejectedJobData = [];
+
 // function -------------------------------------------->
+function updateStatus(statusEle, jobStatus) {
+    statusEle.classList.remove("bg-[#EEF4FF]", "border-[#EEF4FF]", "bg-[#10B981]/10", "border-[#10B981]", "bg-[#EF4444]/10", "border-[#EF4444]");
+    statusEle.childNodes[1].classList.remove("text-[#002C5C]", "text-[#10B981]", "text-[#EF4444]");
+
+    if (jobStatus === 'interview') {
+        statusEle.classList.add("bg-[#10B981]/10", "border-[#10B981]");
+        statusEle.childNodes[1].classList.add("text-[#10B981]");
+    } else if (jobStatus === 'rejected') {
+        statusEle.classList.add("bg-[#EF4444]/10", "border-[#EF4444]");
+        statusEle.childNodes[1].classList.add("text-[#EF4444]");
+    } else {
+        statusEle.classList.add("bg-[#EEF4FF]", "border-[#EEF4FF]");
+        statusEle.childNodes[1].classList.add("text-[#002C5C]");
+    };
+};
+
 function displayTotalJobs(data) {
     for(const totalJob of totalJobs) {
         totalJob.innerText = data.length;
@@ -117,17 +139,54 @@ function displayAllJobs(data) {
                     <p class="font-geist text-sm font-normal">$${jobItem.salaryRange.min} - $${jobItem.salaryRange.max}</p>
                 </div>
                 <div class="w-full space-y-2">
-                    <div class="max-w-[113px] py-2 px-3 bg-[#EEF4FF] rounded-sm">
+                    <div class="job-status max-w-[115px] py-2 px-3 bg-[#EEF4FF] rounded-sm text-center border border-[#EEF4FF]">
                         <p class="font-geist text-sm font-medium text-[#002C5C] uppercase">${jobItem.status}</p>
                     </div>
                     <p class="font-geist text-sm font-normal text-[#323B49]">${jobItem.description}</p>
                 </div>
             </div>
             <div class="w-full flex items-center justify-start gap-2">
-                <button id="jobs-btn" class="max-w-[100px] py-2 px-3 bg-transparent border border-[#10B981] rounded-sm uppercase font-geist text-sm font-semibold text-[#10B981] cursor-pointer">interview</button>
-                <button id="jobs-btn" class="max-w-[100px] py-2 px-3 bg-transparent border border-[#EF4444] rounded-sm uppercase font-geist text-sm font-semibold text-[#EF4444] cursor-pointer">rejected</button>
+                <button class="interview-btn max-w-[100px] py-2 px-3 bg-transparent border border-[#10B981] rounded-sm uppercase font-geist text-sm font-semibold text-[#10B981] cursor-pointer">interview</button>
+                <button class="rejected-btn max-w-[100px] py-2 px-3 bg-transparent border border-[#EF4444] rounded-sm uppercase font-geist text-sm font-semibold text-[#EF4444] cursor-pointer">rejected</button>
             </div>
-        `
+        `;
+
+        const interviewBtn = div.querySelector('.interview-btn');
+        const rejectedBtn = div.querySelector('.rejected-btn');
+        const jobStatus = div.querySelector('.job-status');
+        const statusText = jobStatus.querySelector('p');
+
+        interviewBtn.addEventListener('click', function () {
+
+            jobItem.status = 'interview';
+            statusText.textContent = jobItem.status;
+
+            updateStatus(jobStatus, jobItem.status);
+
+            interviewJobData = interviewJobData.filter(job => job.id !== jobItem.id);
+            rejectedJobData = rejectedJobData.filter(job => job.id !== jobItem.id);
+            
+            interviewJobData.push(jobItem);
+            
+            totalInterview.innerText = interviewJobData.length;
+            totalRejected.innerText = rejectedJobData.length;
+        });
+
+        rejectedBtn.addEventListener('click', function () {
+
+            jobItem.status = 'rejected';
+            statusText.textContent = jobItem.status;
+
+            updateStatus(jobStatus, jobItem.status);
+
+            interviewJobData = interviewJobData.filter(job => job.id !== jobItem.id);
+            rejectedJobData = rejectedJobData.filter(job => job.id !== jobItem.id);
+
+            rejectedJobData.push(jobItem);
+
+            totalInterview.innerText = interviewJobData.length;
+            totalRejected.innerText = rejectedJobData.length;
+        });
 
         jobContainer.appendChild(div);
     });
