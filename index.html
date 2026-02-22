@@ -16,8 +16,31 @@
     <!-- tailwind css ------------------------ -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-
+<body class="bg-[#f7fafc]">
+    <!-- header ------------------------------ -->
+    <header class="w-full min-h-auto">
+        <div class="w-full max-w-[1110px] mx-auto px-5">
+            <div class="pt-[60px]">
+                <div class="block mb-5">
+                    <h1 class="font-geist text-[32px] font-bold text-[#002C5C]">Job Application Tracker</h1>
+                </div>
+                <div class="w-full grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="w-full p-5 space-y-2 bg-[#FFFFFF] border border-[#F1F2F4] rounded-lg">
+                        <p class="font-geist text-sm font-medium text-[#323B49]">Total</p>
+                        <span class="font-geist text-2xl font-bold text-[#002C5C]">8</span>
+                    </div>
+                    <div class="w-full p-5 space-y-2 bg-[#FFFFFF] border border-[#F1F2F4] rounded-lg">
+                        <p class="font-geist text-sm font-medium text-[#323B49]">Interview</p>
+                        <span class="font-geist text-2xl font-bold text-[#10B981]">0</span>
+                    </div>
+                    <div class="w-full p-5 space-y-2 bg-[#FFFFFF] border border-[#F1F2F4] rounded-lg">
+                        <p class="font-geist text-sm font-medium text-[#323B49]">Rejected</p>
+                        <span class="font-geist text-2xl font-bold text-[#EF4444]">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
     <!-- script link ------------------------- -->
     <script src="./script/app.js"></script>
 </body>
